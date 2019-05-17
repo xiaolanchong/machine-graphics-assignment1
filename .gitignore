@@ -1,0 +1,5 @@
+/wingr/bor.aps
+/wingr/WindowApp/Release/*
+/wingr/WindowApp/Debug/*
+/wingr/WindowApp/WindowApp.vcxproj.user
+/wingr/WindowApp/.vs/*

@@ -31,13 +31,13 @@ int	CWnd::DrawGrid(unsigned unX, unsigned unY)
 	double dy = double( GetYBottom() - GetYTop() )/unY;
 	for(i=0; i <= unX; i++)
 	{
-		MoveToEx(	m_hDC, GetXTop() + i*dx, GetYTop(), NULL);
-		LineTo(m_hDC, GetXTop() + i*dx, GetYBottom());
+		MoveToEx(	m_hDC, GetXTop() + static_cast<int>(i*dx), GetYTop(), NULL);
+		LineTo(m_hDC, GetXTop() + static_cast<int>(i*dx), GetYBottom());
 	}
 	for(i=0; i <= unY; i++)
 	{
-		MoveToEx(	m_hDC, GetXTop() , GetYTop() + i*dy, NULL);
-		LineTo(m_hDC, GetXBottom() , GetYTop() + i*dy);
+		MoveToEx(	m_hDC, GetXTop() , GetYTop() + static_cast<int>(i*dy), NULL);
+		LineTo(m_hDC, GetXBottom() , GetYTop() + static_cast<int>(i*dy));
 	}
 	SelectObject(m_hDC, hOldPen);
 	DeleteObject(hPen);
@@ -48,15 +48,14 @@ void CWnd::DrawXNum(double xmin, double xmax, unsigned num)
 {
 	COLORREF clPrev = SetTextColor(m_hDC, RGB(0, 0, 255));
 	unsigned i;
-	int dx = double( GetXBottom() - GetXTop() )/num;
+	int dx = ( GetXBottom() - GetXTop() )/num;
 	double dd = (xmax - xmin)/num;
-	int numd, decd;
-	char szStr[10];
+	TCHAR szStr[10];
 	for(i=0; i <= num; i++)
 	{
-		sprintf(szStr, "%2.2f",dd*i+xmin);
+		_stprintf_s(szStr, _T("%2.2f"),dd*i+xmin);
 		TextOut(m_hDC,	GetXTop() + dx*i - 10, GetYBottom()+20, 
-						szStr, strlen(szStr));
+						szStr, _tcslen(szStr));
 	}
 	SetTextColor(m_hDC, clPrev);
 }
@@ -65,15 +64,15 @@ void CWnd::DrawYNum(double ymin, double ymax, unsigned num)
 {
 	COLORREF clPrev = SetTextColor(m_hDC, RGB(0, 0, 255));
 	unsigned i;
-	int dy = double( GetYBottom() - GetYTop() )/num;
+	int dy = ( GetYBottom() - GetYTop() )/num;
 	double dd = (ymax - ymin)/num;
-	char szStr[10];
+	TCHAR szStr[10];
 	for(i=0; i <= num; i++)
 	{
-		sprintf(szStr, "%2.2f",dd*i+ymin);
+		_stprintf_s(szStr, _T("%2.2f"),dd*i+ymin);
 		TextOut(m_hDC, 
 				GetXTop() - 40, GetYTop() + (num - i)*dy , 
-				szStr, strlen(szStr));
+				szStr, _tcslen(szStr));
 	}
 	SetTextColor(m_hDC, clPrev);
 }
@@ -101,8 +100,8 @@ int CWnd::DrawFunc(unsigned nx, unsigned ny)
 	x1 = GetXTop() + width;
 	y1 = GetYBottom() - m_graph.GetFunc(width);
 	LineTo(m_hDC, x1, y1);
-	char str[] = "f(x) = sin(x)+cos(2x)";
-	TextOut(m_hDC, 200, 10, str, sizeof(str)-1);
+	TCHAR str[] = _T("f(x) = sin(x)+cos(2x)");
+	TextOut(m_hDC, 200, 10, str, _tcslen(str));
 	SelectObject(m_hDC, hOldPen);
 	DeleteObject(hPen);
 	return 0;
@@ -135,7 +134,7 @@ int CGraph::GetFunc( int x)
 {
 	double dx = (GetXMax() - GetXMin())/GetWidth();
 	double dy = (GetMax() - GetMin())/GetHeight();
-	return  (m_fnCalc( dx*x + GetXMin()) - GetMin())/dy;
+	return  static_cast<int>((m_fnCalc( dx*x + GetXMin()) - GetMin())/dy);
 }
 ////////////////////////////////////////////////////////////////////////////
 

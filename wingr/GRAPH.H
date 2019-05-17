@@ -2,6 +2,7 @@
 #define	_GRAPH_H_
 
 #include <windows.h>
+#include <tchar.h>
 
 typedef double CALCFUNC(double x);
 

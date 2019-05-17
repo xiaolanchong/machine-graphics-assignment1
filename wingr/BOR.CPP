@@ -7,9 +7,11 @@
 #define	WIN_WIDTH		600
 #define	WIN_HEIGHT		500
 
+#ifndef WIN32
 #define	LPCTSTR		   	const char*
 #define	TCHAR			char
 #define	APIENTRY		PASCAL
+#endif
 
 // Global Variables:
 HINSTANCE hInst;								// current instance
@@ -24,8 +26,8 @@ LRESULT CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 extern double				SinFunc(double);
 
 int APIENTRY WinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPSTR     lpCmdLine,
+                     HINSTANCE /*hPrevInstance*/,
+                     LPSTR     /*lpCmdLine*/,
                      int       nCmdShow)
 {
  	// TODO: Place code here.
@@ -87,7 +89,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wc.hIcon			= LoadIcon(hInstance, (LPCTSTR)IDI_BOR);
 	wc.hCursor		= LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
-	wc.lpszMenuName	= (LPCSTR)IDC_BOR;
+	wc.lpszMenuName	= (LPCTSTR)IDC_BOR;
 	wc.lpszClassName	= szWindowClass;
  //	wc.hIconSm		= LoadIcon(wcex.hInstance, (LPCTSTR)IDI_SMALL);
 
@@ -201,7 +203,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 // Mesage handler for about box.
-LRESULT CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM /*lParam*/)
 {
 	switch (message)
 	{
