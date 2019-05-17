@@ -1,0 +1,10 @@
+NAME           Bor
+
+DESCRIPTION     'Bor'
+
+EXETYPE         WINDOWS
+
+STUB            'WINSTUB.EXE'
+
+HEAPSIZE        2048
+STACKSIZE       8192
